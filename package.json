@@ -1,0 +1,14 @@
+{
+  "name": "beertracker",
+  "version": "1.0.0",
+  "description": "An application that allows the ratings and comments of beverages.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ben Candy",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}
