@@ -1,59 +1,50 @@
 const connection = require('./connection');
 
+const query = (queryString) => new Promise((res, rej) => {
+  connection.query(queryString, (err, result) => {
+    if (err) rej(err);
+    res(result);
+  });
+});
+
 module.exports = {
-  selectTable: ((table, cb) => {
-    connection.query(`SELECT * FROM  ${table}`, (err, result) => {
-      if (err) throw err;
-      cb(result);
-    });
+  selectTable: (table) => new Promise((res, rej) => {
+    query(`SELECT * FROM  ${table}`)
+      .then((val) => res(val));
   }),
 
-  beerByRating: ((rating, cb) => {
-    const queryString = `SELECT brewers.brewer, beers.beer,beers.rating,cities.city,states.state 
-                          FROM beers INNER JOIN brewers ON beers.brewerid=brewers.id 
-                          INNER JOIN cities ON brewers.cityid=cities.id 
-                          INNER JOIN states ON cities.stateid=states.id 
-                          WHERE beers.rating = ${rating};`;
-    connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      cb(result);
-    });
+  beerByRating: (rating) => new Promise((res, rej) => {
+    query(`SELECT brewers.brewer, beers.beer,beers.rating,cities.city,states.state 
+            FROM beers 
+            INNER JOIN brewers ON beers.brewerid=brewers.id 
+            INNER JOIN cities ON brewers.cityid=cities.id 
+            INNER JOIN states ON cities.stateid=states.id 
+            WHERE beers.rating = ${rating}`)
+      .then((val) => res(val));
   }),
 
-  beerByBrewer: ((brewer, cb) => {
-    const queryString = `SELECT brewers.brewer, beers.beer,beers.rating,cities.city,states.state
-                          FROM beers
-                          INNER JOIN brewers ON beers.brewerid=brewers.id
-                          INNER JOIN cities ON brewers.cityid=cities.id
-                          INNER JOIN states ON cities.stateid=states.id
-                          WHERE brewers.brewer = ${brewer}`;
-    connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      cb(result);
-    });
+  beerByBrewer: (brewer) => new Promise((res, rej) => {
+    query(`SELECT brewers.brewer, beers.beer,beers.rating,cities.city,states.state
+            FROM beers
+            INNER JOIN brewers ON beers.brewerid=brewers.id
+            INNER JOIN cities ON brewers.cityid=cities.id
+            INNER JOIN states ON cities.stateid=states.id
+            WHERE brewers.brewer = ${brewer}`)
+      .then((val) => res(val));
   }),
 
-  stateIdByState: ((state, cb) => {
-    const queryString = `SELECT id FROM states WHERE state="${state}" LIMIT 1`;
-    connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      cb(result);
-    });
+  stateIdByState: (state) => new Promise((res, rej) => {
+    query(`SELECT id FROM states WHERE state="${state}" LIMIT 1`)
+      .then((val) => res(val));
   }),
 
-  cityIdByCity: ((city, stateId, cb) => {
-    const queryString = `SELECT id FROM cities WHERE city="${city}" AND stateId=${stateId} LIMIT 1`;
-    connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      cb(result);
-    });
+  cityIdByCity: (city, stateId) => new Promise((res, rej) => {
+    query(`SELECT id FROM cities WHERE city="${city}" AND stateId=${stateId} LIMIT 1`)
+      .then((val) => res(val));
   }),
 
-  createBrewer: ((brewer, cityId, stateId, cb) => {
-    const queryString = `INSERT INTO brewers (brewer, cityid, stateid) VALUES ("${brewer}",${cityId},${stateId})`;
-    connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      cb(result);
-    });
+  createBrewer: (brewer, cityId, stateId) => new Promise((res, rej) => {
+    query(`INSERT INTO brewers (brewer, cityid, stateid) VALUES ("${brewer}",${cityId},${stateId})`)
+      .then((val) => res(val));
   }),
 };
