@@ -21,19 +21,22 @@ router.route('/:tableName(beers|brewers|cities|states|styles)')
 
 router.route('/brewer')
   .post((req, res) => {
-    db.stateIdByState(req.body.brewerState)
-      .then((stateId) => {
-        db.cityIdByCity(req.body.brewerCity, stateId[0].id)
-          .then((cityId) => {
-            console.log(cityId)
-            if (cityId.length === 0) {
+    db.createBrewer(req.body.brewerName, req.body.city, req.body.state)
+      .then((val) => res.json(val));
+  });
 
-            } else {
-              db.createBrewer(req.body.brewerName, cityId[0].id, stateId[0].id)
-                .then((val) => res.json(val));
-            }
-          });
-      });
+router.route('/beer')
+  .post((req, res) => {
+    db.createBeer(
+      req.body.beer,
+      req.body.rating,
+      req.body.style,
+      req.body.brewer,
+      req.body.city,
+      req.body.state,
+      req.body.comment,
+    )
+      .then((val) => res.json(val));
   });
 
 module.exports = router;
