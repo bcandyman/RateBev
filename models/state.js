@@ -14,9 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   state.init({
-    uuid: DataTypes.UUIDV4,
-    state: DataTypes.STRING,
-    abbr: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
+    abbr: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
   }, {
     sequelize,
     modelName: 'state',
