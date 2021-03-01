@@ -1,8 +1,6 @@
-'use strict';
-
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('states', [{
+  up: async (queryInterface) => {
+    await queryInterface.bulkInsert('States', [{
       name: 'Alabama',
       abbr: 'AL',
       createdAt: new Date(),
@@ -305,7 +303,7 @@ module.exports = {
     ], {});
   },
 
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('states', null, {});
+  down: async (queryInterface) => {
+    await queryInterface.bulkDelete('States', null, { truncate: true, restartIdentity: true });
   },
 };

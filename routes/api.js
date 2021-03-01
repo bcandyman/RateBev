@@ -8,33 +8,48 @@ router.route('/states')
     res.json(states);
   });
 
-router.route('/state/:uuid')
-  .get(async (req, res) => {
-    const { uuid } = req.params;
-    const state = await db.State.findOne({
-      where: {
-        uuid,
-      },
-    });
-    res.json(state);
-  });
+// router.route('/state/:uuid')
+//   .get(async (req, res) => {
+//     const { uuid } = req.params;
+//     const state = await db.State.findOne({
+//       where: {
+//         uuid,
+//       },
+//     });
+//     res.json(state);
+//   });
 
 router.route('/cities')
   .get(async (req, res) => {
+    console.log('cities');
     const cities = await db.City.findAll();
     res.json(cities);
   });
 
-router.route('/city/:uuid')
+router.route('/city/:id')
   .get(async (req, res) => {
-    const { uuid } = req.params;
+    const { id } = req.params;
+    console.log(id);
     const cities = await db.City.findOne({
       where: {
-        uuid,
+        id,
       },
       include: [db.State],
     });
     res.json(cities);
+  });
+
+router.route('/state/:id')
+  .get(async (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+    const state = await db.State.findOne({
+      where: {
+        id,
+      },
+      include: [db.City],
+    });
+    res.json(state);
   });
 
 router.route('/city')
