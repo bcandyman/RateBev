@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class City extends Model {
     /**
@@ -12,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       City.belongsTo(models.State, {
         foreignKey: {
-          allowNull: false,
+          name: 'stateId',
         },
       });
     }
@@ -20,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
   City.init({
     name: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    stateId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   }, {
