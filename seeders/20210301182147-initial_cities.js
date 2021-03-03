@@ -24,6 +24,12 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     },
+    {
+      name: 'Monterey',
+      stateId: 5,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
     ], {});
   },
 
