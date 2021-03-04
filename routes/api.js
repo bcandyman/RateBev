@@ -136,4 +136,20 @@ router.route('/brews/bystyle/:styleId')
     res.json(brewOutput);
   });
 
+router.get('/logins', async (req, res) => {
+  const users = await db.Login.findAll();
+  res.json(users);
+});
+
+router.get('/login/:uuid', async (req, res) => {
+  const { uuid } = req.params;
+  const login = await db.Login.findOne({
+    where: {
+      uuid,
+    },
+    include: [{ model: db.Rating }],
+  });
+  res.json(login);
+});
+
 module.exports = router;

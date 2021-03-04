@@ -1,7 +1,8 @@
 const { Model } = require('sequelize');
+// const { v4 } = require('uuid');
 
 module.exports = (sequelize, DataTypes) => {
-  class Brew extends Model {
+  class Login extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,34 +10,37 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Brew.belongsTo(models.Brewer, {
+      Login.hasMany(models.Rating, {
         foreignKey: {
-          name: 'brewerId',
+          name: 'userid',
         },
-      });
-      Brew.belongsTo(models.Style, {
-        foreignKey: {
-          name: 'styleId',
-        },
+        onDelete: 'cascade',
       });
     }
   }
-  Brew.init({
+  Login.init({
+    uuid: {
+      type: DataTypes.UUID,
+      unique: true,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+    },
     name: {
+      allowNull: false,
       type: DataTypes.STRING,
-      allowNull: false,
     },
-    brewerId: {
-      type: DataTypes.INTEGER,
+    username: {
       allowNull: false,
+      type: DataTypes.STRING,
+      unique: true,
     },
-    styleId: {
-      type: DataTypes.INTEGER,
+    password: {
       allowNull: false,
+      type: DataTypes.STRING,
     },
   }, {
     sequelize,
-    modelName: 'Brew',
+    modelName: 'Login',
   });
-  return Brew;
+  return Login;
 };

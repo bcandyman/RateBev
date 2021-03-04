@@ -1,23 +1,26 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Brews', {
+    await queryInterface.createTable('Ratings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
+      userid: {
+        allowNull: false,
+        type: Sequelize.UUID,
+      },
+      brewId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      rating: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      comment: {
         type: Sequelize.STRING,
-        allowNull: false,
-      },
-      brewerId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      styleId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -30,6 +33,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Brews');
+    await queryInterface.dropTable('Ratings');
   },
 };

@@ -1,7 +1,7 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Brew extends Model {
+  class Rating extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,34 +9,37 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Brew.belongsTo(models.Brewer, {
+      Rating.belongsTo(models.Login, {
         foreignKey: {
-          name: 'brewerId',
+          name: 'userid',
         },
       });
-      Brew.belongsTo(models.Style, {
+      Rating.belongsTo(models.Brew, {
         foreignKey: {
-          name: 'styleId',
+          name: 'brewId',
         },
       });
     }
   }
-  Brew.init({
-    name: {
+  Rating.init({
+    userid: {
+      type: DataTypes.UUIDV4,
+      allowNull: false,
+    },
+    brewId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    rating:{
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    comment: {
       type: DataTypes.STRING,
-      allowNull: false,
-    },
-    brewerId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    styleId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
     },
   }, {
     sequelize,
-    modelName: 'Brew',
+    modelName: 'Rating',
   });
-  return Brew;
+  return Rating;
 };
