@@ -4,8 +4,9 @@
   "description": "An application that allows the ratings and comments of beverages.",
   "main": "server.js",
   "scripts": {
-    "start:prod": "node server.js",
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:dev": "nodemon server.js",
+    "start:prod": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "db_seed": "sequelize db:seed:all",
     "db_migrate": "sequelize db:migrate",
@@ -16,8 +17,10 @@
   "author": "Ben Candy",
   "license": "ISC",
   "dependencies": {
+    "concurrently": "^6.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "if-env": "^1.0.4",
     "mysql2": "^2.2.5",
     "sequelize": "^6.5.0",
     "uuid": "^8.3.2"
