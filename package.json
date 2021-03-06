@@ -13,7 +13,10 @@
     "db_migrate": "sequelize db:migrate",
     "db_migrate_undo": "sequelize db:migrate:undo:all",
     "db_initialize": "npm run db_migrate && npm run db_seed",
-    "db_reinitialize": "npm run db_migrate_undo && npm run db_migrate && npm run db_seed"
+    "db_reinitialize": "npm run db_migrate_undo && npm run db_migrate && npm run db_seed",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
   },
   "author": "Ben Candy",
   "license": "ISC",
