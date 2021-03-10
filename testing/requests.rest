@@ -1,0 +1,45 @@
+
+//Returns all brews within the database
+GET http://localhost:3001/api/brews HTTP/1.1
+###
+
+//Returns all brewers within the database
+GET http://localhost:3001/api/brewers HTTP/1.1
+###
+
+//Returns all cities within the database
+GET http://localhost:3001/api/cities HTTP/1.1
+###
+
+//Returns all logins within the database
+GET http://localhost:3001/api/logins HTTP/1.1
+###
+
+//Returns all ratings within the database
+GET http://localhost:3001/api/ratings HTTP/1.1
+###
+
+//Returns all states within the database
+GET http://localhost:3001/api/states HTTP/1.1
+###
+
+//Returns all styles within the database
+GET http://localhost:3001/api/styles HTTP/1.1
+###
+
+//Add a new user to the database.
+POST  http://localhost:3001/api/user HTTP/1.1
+content-type: application/json
+
+{
+    "first_name": "Benjamin",
+    "last_name": "Candy",
+    "email": "user2@email.com",
+    "password": "userPassword"
+}
+
+###
+
+//Add a new user to the database.
+GET  http://localhost:3001/api/user/user2@email.com/userPassword HTTP/1.1
+content-type: application/json
