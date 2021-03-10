@@ -7,7 +7,7 @@ const router = require('express').Router();
 // @route   POST    /api/user/signup
 // @desc    Register a new user
 // @access  Public
-router.post('/user/signup', async (req, res) => {
+router.post('/signup', async (req, res) => {
 	//Validate body data
 	const { firstName, lastName, email, password } = req.body;
 	if (!firstName || !lastName || !email || !password) {

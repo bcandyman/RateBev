@@ -11,8 +11,7 @@ if (process.env.NODE_ENV === "production") {
 	app.use(express.static("client/build"));
 }
 
-app.use("/api", require("./routes/api/api"));
-app.use("/api", require("./routes/api/auth"));
+app.use('/api',require('./routes/api'))
 
 app.listen(PORT, async () => {
 	console.log(`Listening on port ${PORT}`);
