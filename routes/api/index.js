@@ -19,6 +19,9 @@ router.use('/brewer', require('./brewer'));
 // Brew routes
 router.use('/brew', require('./brew'));
 
+// Rating routes
+router.use('/rating', require('./rating'));
+
 // For anything else, render the html page
 router.use((req, res) => {
 	res.sendFile(path.join(__dirname, '../../client/build/index.html'));

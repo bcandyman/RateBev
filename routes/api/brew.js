@@ -10,6 +10,17 @@ router.get('/all', auth, async (req, res) => {
 	res.json(await controller.findAll(db.Brew));
 });
 
+// @route   GET     /api/brew/all/byBrewerId/{id}
+// @desc    Get all brews within a specified brewer
+// @access  Private
+router.get('/all/byBrewerId/:id', auth, async (req, res) => {
+	const { id: brewerId } = req.params;
+	if (!brewerId) {
+		return res.status(400).json({ msg: 'Brewer Id must be populated' });
+	}
+	res.json(await controller.findAll(db.Brew, { where: { brewerId: brewerId } }));
+});
+
 // @route   GET     /api/brew/{id}}
 // @desc    Get a brew by its id
 // @access  Private

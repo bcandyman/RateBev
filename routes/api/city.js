@@ -4,10 +4,21 @@ const db = require('../../models');
 const router = require('express').Router();
 
 // @route   GET     /api/city/all
-// @desc    Get all styles
+// @desc    Get all cities
 // @access  Private
 router.get('/all', auth, async (req, res) => {
 	res.json(await controller.findAll(db.City));
+});
+
+// @route   GET     /api/city/all/byStateId/{id}
+// @desc    Get all cities within a specified state
+// @access  Private
+router.get('/all/byStateId/:id', auth, async (req, res) => {
+	const { id: stateId } = req.params;
+	if (!stateId) {
+		return res.status(400).json({ msg: 'State Id must be populated' });
+	}
+	res.json(await controller.findAll(db.City, { where: { stateId: stateId } }));
 });
 
 // @route   GET     /api/city/{id}

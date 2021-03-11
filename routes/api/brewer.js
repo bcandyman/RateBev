@@ -10,6 +10,17 @@ router.get('/all', auth, async (req, res) => {
 	res.json(await controller.findAll(db.Brewer));
 });
 
+// @route   GET     /api/brewer/all/byCityId/{id}
+// @desc    Get all brewers within a specified city
+// @access  Private
+router.get('/all/byCityId/:id', auth, async (req, res) => {
+	const { id: cityId } = req.params;
+	if (!cityId) {
+		return res.status(400).json({ msg: 'City Id must be populated' });
+	}
+	res.json(await controller.findAll(db.Brewer, { where: { cityId: cityId } }));
+});
+
 // @route   GET     /api/brewer/{id}
 // @desc    Get a brewer by its id
 // @access  Private
