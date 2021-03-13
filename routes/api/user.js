@@ -28,7 +28,7 @@ router.post('/signup', async (req, res) => {
 			{ id: newUser.uuid, name: newUser.first_name },
 			process.env.JWT_SECRET
 		);
-
+        res.cookie('x-auth-token', token);
 		res.json({ token });
 	});
 });
@@ -55,6 +55,7 @@ router.post('/login', async (req, res) => {
 			{ id: user.uuid, name: user.first_name },
 			process.env.JWT_SECRET
 		);
+        res.cookie('x-auth-token', token);
 		res.json({ token });
 	});
 });
