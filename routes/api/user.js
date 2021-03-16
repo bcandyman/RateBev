@@ -22,13 +22,13 @@ router.post('/signup', async (req, res) => {
 			email,
 			password: hash,
 		});
-        
+
 		//Create token
 		const token = jwt.sign(
 			{ id: newUser.uuid, name: newUser.first_name },
 			process.env.JWT_SECRET
 		);
-        res.cookie('x-auth-token', token);
+		res.cookie('x-auth-token', token);
 		res.json({ token });
 	});
 });
@@ -43,21 +43,26 @@ router.post('/login', async (req, res) => {
 	}
 
 	//Pull user data from the database
-	const { dataValues: user } = await controller.findOne(db.User, {
-		where: { email },
-	});
-	if (!user) return res.status(401).json({ msg: 'User does not exist' });
-	//Test if credentials match
-	bcrypt.compare(password, user.password, function (err, isMatch) {
-		if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
-		//Create token and send to client
-		const token = jwt.sign(
-			{ id: user.uuid, name: user.first_name },
-			process.env.JWT_SECRET
-		);
-        res.cookie('x-auth-token', token);
-		res.json({ token });
-	});
+	try {
+		const { dataValues: user } = await controller.findOne(db.User, {
+			where: { email },
+		});
+
+		if (!user) return res.status(401).json({ msg: 'User does not exist' });
+		//Test if credentials match
+		bcrypt.compare(password, user.password, function (err, isMatch) {
+			if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
+			//Create token and send to client
+			const token = jwt.sign(
+				{ id: user.uuid, name: user.first_name },
+				process.env.JWT_SECRET
+			);
+			res.cookie('x-auth-token', token);
+			res.json({ token });
+		});
+	} catch (error) {
+        return res.status(400).json({ msg: 'User not found.' });
+	}
 });
 
 module.exports = router;

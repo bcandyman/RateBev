@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
+// import FormControl from '@material-ui/core/FormControl';
+// import Input from '@material-ui/core/Input';
+// import InputLabel from '@material-ui/core/InputLabel';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import API from '../utils/API';
+import API from '../../utils/API';
+import TextInput from './components/TextInput';
 
 const useStyles = makeStyles({
 	root: {
@@ -31,30 +32,30 @@ export default function Login() {
 	};
 
 	const handleOnLogin = () => {
-		API.login(formObject).then(history.push('/home')).catch(console.log('fail'));
+		API.login(formObject)
+			.then(() => history.push('/home'))
+			.catch((error) => console.log(error));
 	};
 
 	return (
 		<Card raised={true} className={classes.root}>
 			<form id='login'>
-				<FormControl>
-					<InputLabel htmlFor='my-input'>Email address</InputLabel>
-					<Input
-						name='email'
-						id='login-email'
-						aria-describedby='login email'
-						onChange={handleInputChange}
-					/>
-				</FormControl>
-				<FormControl>
-					<InputLabel htmlFor='my-input'>Password</InputLabel>
-					<Input
-						name='password'
-						id='login-password'
-						aria-describedby='login password'
-						onChange={handleInputChange}
-					/>
-				</FormControl>
+				<TextInput
+					name='email'
+					id='login-email'
+					aria-describedby='login email'
+					onChange={handleInputChange}
+				>
+					Email
+				</TextInput>
+				<TextInput
+					name='password'
+					id='login-password'
+					aria-describedby='login password'
+					onChange={handleInputChange}
+				>
+					Password
+				</TextInput>
 				<br />
 				<Button id='login' className={classes.but} onClick={handleOnLogin}>
 					Login
