@@ -4,6 +4,11 @@ import API from '../utils/API';
 
 function Ratings() {
 	const [states, setStates] = useState();
+	const [state, setState] = React.useState('');
+
+	const handleChange = (event) => {
+		setState(event.target.value);
+	};
 
 	useEffect(() => {
 		API.states()
@@ -12,10 +17,12 @@ function Ratings() {
 	}, []);
 
 	return (
-		<Select>
+		<Select value={state} onChange={handleChange}>
 			{states
 				? states.map((val, index) => (
-						<MenuItem value={val.abbr}>{val.abbr}</MenuItem>
+						<MenuItem key={val.id} value={val.abbr}>
+							{val.abbr}
+						</MenuItem>
 				  ))
 				: null}
 		</Select>
